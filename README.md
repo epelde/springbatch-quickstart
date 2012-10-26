@@ -12,21 +12,21 @@ To install and start working with the archetype you'll just need basic knowledge
 
 #How can I start quickly?#
 
-1.**Install needed software**
+1. **Install needed software**
 
-This template is a Maven 3 archetype so you will need to have Maven 3 installed on your computer http://maven.apache.org/download.html.
+This template is a Maven 3 archetype so you will need to have Maven 3 installed on your computer. Download it from http://maven.apache.org/download.html.
 
-2.**Download the archetype**
+2. **Download the archetype**
 
 Once Maven 3 is installed you have to install this archetype from the jar file. Download it from https://github.com/downloads/epelde/spring-batch-template/spring-batch-template-archetype-1.0-SNAPSHOT.jar.
 
-3.**Install the archetype**
+3. **Install the archetype**
 
 To install the archetype on your local repository run the following command:
 
     mvn install:install-file -DgroupId=epelde.github.com -DartifactId=springbatch-quickstart -Dversion=1.0-SNAPSHOT -Dpackaging=jar -Dfile=PATH_TO_WHERE_YOU_DOWNLOADED_JAR_FILE
 
-4.**Generate your project source**
+4. **Generate your project source**
 
 Once installed successfully you are ready to start your on Spring Batch project. A Maven archetype is a Maven project templating toolkit. Move to a fresh directory and use your archetype to generate the project. Type the following command:
 
@@ -34,7 +34,7 @@ Once installed successfully you are ready to start your on Spring Batch project.
 
 The full list is displayed and in the prompt response, you will be able to answer with a filter. Then you will have to provide information for groupId, artifactId and version.
 
-5.**Compile & run**
+5. **Compile & run**
 
 Finally compile the project by running the following command:
 
@@ -45,7 +45,7 @@ Now you are ready to run  the samples!
 # How can I run the samples?#
 
 
-#What's Spring Batch?#
+#But what's Spring Batch?#
 
 Spring Batch is an open source Java based framework for developing batch applications. It's not the aim of this project to explain Spring Batch in depth. If you want to know more about Spring Batch and it's features & advantages please refer to http://static.springsource.org/spring-batch/. The user guide will also be very useful http://static.springsource.org/spring-batch/reference/html-single/index.html.
 
