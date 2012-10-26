@@ -1,6 +1,4 @@
-#springbatch-quickstart
-
-##A Maven 3 archetype for quick starting Spring Batch projects.
+#springbatch-quickstart (A Maven 3 archetype for quick starting Spring Batch projects)
 
 You have to develop a Java batch application (process) and you don't know where to start from? This may help you. The aim of this project is to offer a quick way to start developing a Java based Sprig Batch application by using a custom project archetype. This archetype will help you create a fully configured Maven project in seconds, with all the dependencies included, so that you can start developing the business logic on top of Spring Batch infrastructure.
 
@@ -14,26 +12,33 @@ To install and start working with the archetype you'll just need basic knowledge
 
 #How can I start quickly?
 
-+This template is a Maven 3 archetype so you will need to have Maven 3 installed on your computer http://maven.apache.org/download.html.
+-Install software
 
-+Once Maven 3 is installed you have to install this archetype from the jar file. Download it from https://github.com/downloads/epelde/spring-batch-template/spring-batch-template-archetype-1.0-SNAPSHOT.jar.
+This template is a Maven 3 archetype so you will need to have Maven 3 installed on your computer http://maven.apache.org/download.html.
+
+-Download archetype
+
+Once Maven 3 is installed you have to install this archetype from the jar file. Download it from https://github.com/downloads/epelde/spring-batch-template/spring-batch-template-archetype-1.0-SNAPSHOT.jar.
+
+-Install archetype
 
 To install the archetype on your local repository run the following command:
 
-`mvn install:install-file -DgroupId=epelde.github.com -DartifactId=springbatch-quickstart 
--Dversion=1.0-SNAPSHOT -Dpackaging=jar -Dfile=PATH_TO_WHERE_YOU_DOWNLOADED_JAR_FILE`
+    mvn install:install-file -DgroupId=epelde.github.com -DartifactId=springbatch-quickstart -Dversion=1.0-SNAPSHOT -Dpackaging=jar -Dfile=PATH_TO_WHERE_YOU_DOWNLOADED_JAR_FILE
 
-+Once installed successfully you are ready to start your on Spring Batch project. A Maven archetype is a Maven project templating toolkit.
+-Generate your project source
+
+Once installed successfully you are ready to start your on Spring Batch project. A Maven archetype is a Maven project templating toolkit.
 
 Move to a fresh directory and use your archetype to generate the project. Type the following command:
 
-`mvn archetype:generate -DarchetypeCatalog=local`
+    mvn archetype:generate -DarchetypeCatalog=local
 
 The full list is displayed and in the prompt response, you will be able to answer with a filter. Then you will have to provide information for groupId, artifactId and version.
 
-+Finally compile the project by running the following command:
+-Finally compile the project by running the following command:
 
-`mvn clean package`
+    mvn clean package
 
 Now you are ready to run  the samples!
 
