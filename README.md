@@ -44,6 +44,8 @@ Now you are ready to run  the samples!
 
 # How can I run the samples?#
 
+Along with the archetype there are a number of sample jobs provided ready to be use. You can run the samples provided just using the command line. As you should have Maven 3 already installed, the easiest way is to use it to run the samples. 
+
 
 #But what's Spring Batch?#
 
