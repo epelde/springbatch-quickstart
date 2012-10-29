@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:integration="http://www.springframework.org/schema/integration" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-1.0.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file-1.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+		
+	<!--
+	To quickly execute this job via command line run:
+	mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.CommandLineJobRunner -Dexec.args="sample2.xml sample2"
+	
+	Learn how to read a flat file (CSV format) and create a data object for each line in it. Use this objects to create
+	an output file with a header and footer and a line for every data object.
+	
+	This examples shows how to use a FlatFileItemReader to read a flat CSV format file. You can map each file line to 
+	create and populate a data object by simply defining the data model (Township). No other class is necessary in this read phase.
+	Fields of each of the lines are separated by the ; character. The input file has a 5 lines header that are not processed.
+	
+	This job does "nothing", it doesn't process the input data. Simply writes the input information in a separated output file 
+	at path "output/flatfilereader/townships.txt". Check for it in your project's root directory. The item writer simply calls toString() 
+	method on each data object (Township) to generate a line. This job also shows how to use FlatFileHeaderCallback and 
+	FlatFileFooterCallback to generate a header and footer in the output file. The footer callback shows how to add dynamically calculated
+	data to the footer by getting the current number of items written for this execution.
+	
+	Note: there is an "/output/output.log" file at the projects root directory. Check for it if you have any problem running the job.
+	-->		
+
+	<import resource="applicationContext.xml"/>
+	
+	<job id="sample2" xmlns="http://www.springframework.org/schema/batch">
+		<step id="step1">
+			<tasklet>
+				<chunk reader="townshipItemReader" writer="townshipItemWriter" commit-interval="10" />
+				<listeners>
+					<listener ref="townshipFileFooter" />
+				</listeners>								
+			</tasklet>
+		</step>
+	</job>
+		
+	<bean id="townshipItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
+		<property name="resource" value="/sample2/input/townships.csv"/>
+		<property name="linesToSkip" value="5"/>
+		<property name="recordSeparatorPolicy" ref="recordSeparatorPolicy"/>
+		<property name="lineMapper" ref="townshipLineMapper"/>	
+	</bean>
+	
+	<bean id="townshipLineMapper" class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+		<property name="lineTokenizer" ref="townshipLineTokenizer" />
+		<property name="fieldSetMapper" ref="townFieldSetMapper" />
+	</bean>
+	
+	<!-- 
+	Parses a line to extract fields. A ";" character is used two separate fields.
+	All lines must have as many or fewer fields that the ones defined in "names" property.  
+	-->
+	<bean id="townshipLineTokenizer" class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+		<property name="delimiter" value=";"/>
+		<property name="names" value="name,province,state,latitude,longitude,url"/>
+	</bean>
+	
+	<!-- Creates data objects from fields -->	
+	<bean id="townFieldSetMapper" class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+		<property name="prototypeBeanName" value="township"/>
+	</bean>
+	
+	<!-- 
+	This scope="property" attribute is VERY important.
+	 -->
+	<bean id="township" class="epelde.github.com.sample2.model.Township" scope="prototype"/>
+	
+	<!-- 
+	Default record separator policy implementation it's useful most of the times.
+	Treats each line as separate records. 
+	-->
+	<bean id="recordSeparatorPolicy" class="org.springframework.batch.item.file.separator.DefaultRecordSeparatorPolicy" />
+
+	<!-- 
+	If succesfully running the ItemWriter creates a file at path /output/flatfilereader/township.txt
+	at the root of your project's directory. Check for it.
+	 -->
+	<bean id="townshipItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+		<property name="headerCallback" ref="townshipFileHeader"/>
+		<property name="footerCallback" ref="townshipFileFooter"/>
+		<property name="resource" value="file:output/sample2/townships.txt"/>
+		<property name="lineAggregator">
+			<bean class="org.springframework.batch.item.file.transform.PassThroughLineAggregator" />
+		</property>		
+	</bean>
+	
+	<bean id="townshipFileHeader" class="epelde.github.com.sample2.writer.TownshipFileHeader"/>
+	
+	<bean id="townshipFileFooter" class="epelde.github.com.sample2.writer.TownshipFileFooter" scope="step"/>
+			
+</beans>
