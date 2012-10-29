@@ -38,23 +38,38 @@ Download it from https://github.com/downloads/epelde/spring-batch-template/sprin
 To install the archetype on your local repository run the following command:
 
     mvn install:install-file -DgroupId=epelde.github.com -DartifactId=springbatch-quickstart -Dversion=1.0-SNAPSHOT -Dpackaging=jar -Dfile=PATH_TO_WHERE_YOU_DOWNLOADED_JAR_FILE
+		
+**Update your local catalog [optional]**
+
+The point of catalogs is exactly to not have to know the names of archetypes in advance (groupId, artifactId, version). This way you have to type less when generating your project as it will be displayed in an archetype list. For archetypes not included in the catalog the user will have to type more but it will work the same way.
+
+    mvn archetype:crawl -Dcatalog=THE_ARCHETYPES_CATALOG_TO_UPDATE_XML_FILE
 
 **Generate your project source**
 
-Once installed successfully you are ready to start your on Spring Batch project. A Maven archetype is a Maven project templating toolkit. Move to a fresh directory and use your archetype to generate the project. Type the following command:
+Once installed successfully you are ready to start your on Spring Batch project. A Maven archetype is a Maven project templating toolkit. Move to a fresh directory and use your archetype to generate the project. if you updated yout local catalog type the following command:
 
     mvn archetype:generate -DarchetypeCatalog=local
+		
+This will prompt you with the archetypes list installed in your local repository. Now you can select one and provided the required information for groupId, artifactId and version of your project.
 
-The full list is displayed and in the prompt response, you will be able to answer with a filter. Then you will have to provide information for groupId, artifactId and version.
+If you didn't updated you local catalog you have to type a bit more:
 
-**Compile & run**
+    mvn archetype:generate -DarchetypeGroupId=epelde.github.com -DarchetypeArtifactId=springbatch-quickstart -DarchetypeVersion=1.0-SNAPSHOT -DarchetypeCatalog=local _DgroupId=YOU_PROJECTS_PACKAGING -DartifactId=YOUR_PROJECTS_ID -Dversion=YOU_PROJECTS_VERSION
+
+**Compile & build**
 
 Finally compile the project by running the following command:
 
     mvn clean package
 
-Now you are ready to run  the samples!
+**Run the sample**
 
+Now you are ready to run  the samples. Type the following Maven command to run the simplets sample provided in order to check if everuthing is ok.
+
+    mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.CommandLineJobRunner -Dexec.args="sample1.xml sample1" 
+
+		
 # How can I run the samples?#
 
 Along with the archetype there are a number of sample jobs provided ready to be use. You can run the samples provided just using the command line. As you should have Maven 3 already installed, the easiest way is to use it to run the samples. 
