@@ -31,7 +31,7 @@ Download it from http://maven.apache.org/download.html.
 
 Once Maven 3 is installed you have to install this archetype from the jar file.
 
-Download it from https://github.com/downloads/epelde/spring-batch-template/spring-batch-template-archetype-1.0-SNAPSHOT.jar.
+Download it from https://github.com/downloads/epelde/springbatch-quickstart/springbatch-quikstart-archetype-1.0-SNAPSHOT.jar.
 
 **Install the archetype**
 
